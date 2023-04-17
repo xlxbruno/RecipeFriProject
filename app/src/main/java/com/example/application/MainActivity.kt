@@ -48,16 +48,7 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(navController, startDestination = "Home"){
 
-                        composable("Home"){
-                            HomeScreen(
-                                onDetailsClick = {
-                                        id -> navController.navigate("details/id=$id?name=h1")
-                                },
-                                onAboutClick = {
-                                    navController.navigate("about")
-                                }
-                            )
-                        }
+
 
                         composable("about"){
                             AboutScreen(onNavigateUp = {
@@ -114,6 +105,7 @@ class MainActivity : ComponentActivity() {
                     IconButton(onClick = onNavigateUp) {
                         Icon(Icons.Rounded.ArrowBack, contentDescription = "Go Back")
                     }
+
                 }
 
                 Image(
@@ -148,6 +140,10 @@ class MainActivity : ComponentActivity() {
                     Text(modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.body2, text = "${article.method}"
                     )
+                    Text(text = "Click link below for a sample video", textAlign = TextAlign.Right,
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(text = "${article.video}")
 
 
 
@@ -155,73 +151,9 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-    @Composable
-    fun HomeScreen(
-        onDetailsClick: (id: Long) -> Unit,
-        onAboutClick: () -> Unit,
-    ) {
-        Scaffold { padding ->
-            LazyColumn(contentPadding = padding) {
-                item {
-                    HomeAppBar(onAboutClick)
-                }
-                item {
-                    Spacer(Modifier.height(30.dp))
-                }
-                items(recipe) { item ->
-                    ArticleCard(item, onClick = {
-                        onDetailsClick(item.id)
-                    })
-                }
-            }
-        }
-    }
-
-    @Composable
-    fun HomeAppBar(onAboutClick: () -> Unit){
-        Row(verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp)){
-            Text("My recipes", style = MaterialTheme.typography.h6)
-            Spacer(modifier = Modifier.weight(1f))
-            TextButton(onClick = onAboutClick){
-                Text("About")
-            }
-        }
-
-    }
 
 
-    @OptIn(ExperimentalMaterialApi::class)
-    @Composable
-    fun ArticleCard(item: Content, onClick: () -> Unit){
-        Card(modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 10.dp)
-            .fillMaxWidth(),
-            onClick = onClick
-            ){
-            Column {
-                Image(painterResource(id =item.image ), contentDescription = "Thumbnail",
-                modifier = Modifier
-                    .fillMaxSize()
-                    .aspectRatio(16f / 9f),
-                contentScale = ContentScale.Crop
-                )
-                Column (
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(20.dp)){
-                    Text(item.title)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "Click for more details", maxLines = 1, style = MaterialTheme.typography.body2)
-                }
-                }
 
-
-            }
-
-        }
-
-    }
     @Composable
     fun  AboutScreen(onNavigateUp: () -> Unit){
         Scaffold {
@@ -256,7 +188,7 @@ class MainActivity : ComponentActivity() {
 
             }
         }
-    }
+    }}
 
 
 
